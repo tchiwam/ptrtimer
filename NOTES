@@ -1,0 +1,4 @@
+
+# Install in my home dir
+cmake -DCMAKE_INSTALL_PREFIX=$dir_base ..
+
