@@ -4,18 +4,14 @@
 
 ptrtimer *ptrtimer_init(long n)
 {
-  printf("Init\n");
   ptrtimer *id;
   long i;
-  printf("Alloc \n");
   id = malloc(sizeof(ptrtimer));
   id->n=n;
   if (id == NULL)
      return NULL;
-  printf("Alloc lap %ld\n",n);
   if(id->n>0)
     id->tx = malloc (n*sizeof(struct timespec));
-  printf("reset \n",n);
   ptrtimer_reset(id);
   return id;
 }
