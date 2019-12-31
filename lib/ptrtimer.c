@@ -4,25 +4,19 @@
 
 ptrtimer *ptrtimer_init(long n)
 {
+  printf("Init\n");
   ptrtimer *id;
   long i;
+  printf("Alloc \n");
   id = malloc(sizeof(ptrtimer));
   id->n=n;
-  clock_gettime(CLOCK_REALTIME,&id->t0);
-  id->t1.tv_sec = id->t0.tv_sec;
-  id->t1.tv_nsec = id->t0.tv_nsec;
-  id->count = 0;
-  id->timer = 0.0;
-  id->max = 0.0;
-  id->min = 0.0;
+  if (id == NULL)
+     return NULL;
+  printf("Alloc lap %ld\n",n);
   if(id->n>0)
-  {
     id->tx = malloc (n*sizeof(struct timespec));
-    for( i = 0; i<id->n ; i++)
-    {
-      id->tx[i] = 0.0;
-    }
-  }
+  printf("reset \n",n);
+  ptrtimer_reset(id);
   return id;
 }
 int ptrtimer_start(ptrtimer *id)
@@ -88,9 +82,21 @@ double ptrtimer_getavg(ptrtimer *id)
 
 int ptrtimer_reset(ptrtimer *id)
 {
-long n = id->n; 
-ptrtimer_close(id);
-id = ptrtimer_init(n);
+  int i;
+  clock_gettime(CLOCK_REALTIME,&id->t0);
+  id->t1.tv_sec = id->t0.tv_sec;
+  id->t1.tv_nsec = id->t0.tv_nsec;
+  id->count = 0;
+  id->timer = 0.0;
+  id->max = 0.0;
+  id->min = 0.0;
+  if(id->n>0)
+  { 
+    for( i = 0; i<id->n ; i++)
+    { 
+      id->tx[i] = 0.0;
+    }
+  }
 return 0;
 }
 
