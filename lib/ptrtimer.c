@@ -5,7 +5,6 @@
 ptrtimer *ptrtimer_init(long n)
 {
   ptrtimer *id;
-  long i;
   id = malloc(sizeof(ptrtimer));
   id->n=n;
   if (id == NULL)
@@ -33,7 +32,6 @@ int ptrtimer_stop(ptrtimer *id)
 {
   double dt;
   clock_gettime(CLOCK_REALTIME,&id->t1);
-  //  printf("tv_sec:%ld  tv_nsec:%ld\n", id->t1.tv_sec, id->t1.tv_nsec);
   dt =(double)(id->t1.tv_sec - id->t0.tv_sec) + ((double)(id->t1.tv_nsec - id->t0.tv_nsec)*0.000000001d);
   id->timer += dt;
   if(dt > id->max)
